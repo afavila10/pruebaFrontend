@@ -4,14 +4,13 @@ import { v4 as uuidv4 } from "uuid";
 
 // Tipo de documento
 export interface DocumentData {
-
     id: string;
     nombre: string;
     tipo: string;
     fecha: string;
     descripcion?: string;
     archivo: string;
-
+    activo?: boolean;
 }
 
 

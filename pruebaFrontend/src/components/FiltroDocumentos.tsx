@@ -35,6 +35,7 @@ const FiltroDocumentos: React.FC<FiltroDocumentosProps> = ({ filtros, onFiltrosC
                         type="text"
                         className="form-control"
                         id="texto"
+                        name="texto" 
                         placeholder="Ej: factura, contrato..."
                         value={filtros.texto}
                         onChange={handleChange}
@@ -63,6 +64,7 @@ const FiltroDocumentos: React.FC<FiltroDocumentosProps> = ({ filtros, onFiltrosC
                     <label htmlFor="fecha" className="form-label">Filtrar por fecha</label>
                     <input
                         type="date"
+                        name="fecha"
                         className="form-control"
                         id="fecha"
                         value={filtros.fecha}

@@ -56,6 +56,37 @@ const App: React.FC = () => {
         localStorage.setItem('documentos', JSON.stringify(actualizados));
     };
 
+
+    // ✅ Manejo de eliminación o restauración
+    const handleEliminarRestaurar = (doc: DocumentData) => {
+        const actualizados = documentos.map((d) =>
+            d.id === doc.id ? { ...d, activo: !d.activo } : d
+        );
+        setDocumentos(actualizados);
+        localStorage.setItem('documentos', JSON.stringify(actualizados));
+    };
+
+    const desactivarDocumento = (id: string) => {
+        const actualizados = documentos.map(doc =>
+            doc.id === id ? { ...doc, activo: false } : doc
+        );
+        setDocumentos(actualizados);
+        localStorage.setItem("documentos", JSON.stringify(actualizados));
+    };
+
+    const restablecerDocumento = (id: string) => {
+        const actualizados = documentos.map(doc =>
+            doc.id === id ? { ...doc, activo: true } : doc
+        );
+        setDocumentos(actualizados);
+        localStorage.setItem("documentos", JSON.stringify(actualizados));
+    };
+
+
+
+
+
+
     // 🔁 Cargar documentos desde localStorage al montar
     useEffect(() => {
         const storedDocs = localStorage.getItem('documentos');
@@ -64,6 +95,7 @@ const App: React.FC = () => {
                 ...doc,
                 tipo: doc.tipo ?? '',
                 fecha: doc.fecha ?? '',
+                activo: doc.activo !== false, 
             }));
             setDocumentos(parsedDocs);
         }
@@ -116,7 +148,10 @@ const App: React.FC = () => {
                         documentos={documentosFiltrados}
                         onVer={verDocumento}
                         onEditar={handleEditar}
+                        onEliminar={desactivarDocumento}
+                        onRestablecer={restablecerDocumento}
                     />
+
                     <ModalVerDocumento
                         show={showModal}
                         documento={documentoSeleccionado}
