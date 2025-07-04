@@ -5,6 +5,7 @@ import TablaDocumentos from './components/TablaDocumentos';
 import type { DocumentData } from './components/DocumentForm';
 import ModalVerDocumento from './components/ModalVerDocumento';
 import ModalEditarDocumento from './components/ModalEditarDocumento';
+import ModalTiposDocumento from './components/ModalTiposDocumento';
 
 
 const App: React.FC = () => {
@@ -14,6 +15,18 @@ const App: React.FC = () => {
     const [documentoSeleccionado, setDocumentoSeleccionado] = useState<DocumentData | null>(null);
     const [showModalEditar, setShowModalEditar] = useState(false);
     const [documentoEditando, setDocumentoEditando] = useState<DocumentData | null>(null);
+    const [tiposDocumento, setTiposDocumento] = useState<string[]>(() => {
+        const almacenados = localStorage.getItem('tipos');
+        return almacenados ? JSON.parse(almacenados) : ['Factura', 'Contrato', 'Certificado'];
+    });
+
+    const [showGestionTipos, setShowGestionTipos] = useState(false);
+
+
+    const actualizarTiposDocumento = (nuevosTipos: string[]) => {
+        setTiposDocumento(nuevosTipos);
+        localStorage.setItem('tipos', JSON.stringify(nuevosTipos));
+    };
 
 
 
@@ -83,10 +96,21 @@ const App: React.FC = () => {
 
     return (
         <div>
-            <Navbar onNuevoDocumento={handleNuevoDocumento} />
+            <Navbar
+                onNuevoDocumento={handleNuevoDocumento}
+                tiposDocumento={tiposDocumento}
+                onActualizarTipos={actualizarTiposDocumento}
+                onGestionarTipos={() => setShowGestionTipos(true)} // 👈 este debe estar
+            />
+
             <div className="d-flex">
                 <div className="p-4 flex-grow-1">
-                    <FiltroDocumentos filtros={filtros} onFiltrosChange={setFiltros} />
+                    <FiltroDocumentos
+                        filtros={filtros}
+                        onFiltrosChange={setFiltros}
+                        tiposDocumento={tiposDocumento} // 👈 importante
+                    />
+
                     {/*<h2 className="mb-3">📂 Bienvenido al Gestor de Documentos</h2>*/}
                     <TablaDocumentos
                         documentos={documentosFiltrados}
@@ -104,6 +128,13 @@ const App: React.FC = () => {
                         onClose={() => setShowModalEditar(false)}
                         onGuardar={guardarEdicion}
                     />
+                    <ModalTiposDocumento
+                        show={showGestionTipos}
+                        onClose={() => setShowGestionTipos(false)}
+                        tipos={tiposDocumento}
+                        onActualizar={actualizarTiposDocumento}
+                    />
+
 
                 </div>
             </div>

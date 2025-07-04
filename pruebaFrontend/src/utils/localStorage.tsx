@@ -17,3 +17,4 @@ export const eliminarDocumento = (id: string) => {
     const docs = obtenerDocumentos().filter(doc => doc.id !== id);
     localStorage.setItem(STORAGE_KEY, JSON.stringify(docs));
 };
+

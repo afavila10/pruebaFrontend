@@ -11,12 +11,16 @@ interface FiltroDocumentosProps {
         tipo: string;
         fecha: string;
     }) => void;
+    tiposDocumento: string[];
 }
 
-const FiltroDocumentos: React.FC<FiltroDocumentosProps> = ({ filtros, onFiltrosChange }) => {
+const FiltroDocumentos: React.FC<FiltroDocumentosProps> = ({ filtros, onFiltrosChange, tiposDocumento }) => {
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-        const { id, value } = e.target;
-        onFiltrosChange({ ...filtros, [id]: value });
+        const { name, value } = e.target;
+        onFiltrosChange({
+            ...filtros,
+            [name]: value
+        });
     };
 
     return (
@@ -41,15 +45,16 @@ const FiltroDocumentos: React.FC<FiltroDocumentosProps> = ({ filtros, onFiltrosC
                 <div className="col-md-4">
                     <label htmlFor="tipo" className="form-label">Tipo de documento</label>
                     <select
+                        className="form-control"
+                        name="tipo"
                         id="tipo"
-                        className="form-select"
                         value={filtros.tipo}
                         onChange={handleChange}
                     >
                         <option value="">Todos</option>
-                        <option value="Factura">Factura</option>
-                        <option value="Contrato">Contrato</option>
-                        <option value="Certificado">Certificado</option>
+                        {tiposDocumento.map((tipo) => (
+                            <option key={tipo} value={tipo}>{tipo}</option>
+                        ))}
                     </select>
                 </div>
 

@@ -44,7 +44,7 @@ const ModalEditarDocumento: React.FC<Props> = ({ show, documento, onClose, onGua
     return (
         <Modal show={show} onHide={onClose} centered>
             <Modal.Header closeButton>
-                <Modal.Title>?? Editar Documento</Modal.Title>
+                <Modal.Title>Editar Documento</Modal.Title>
             </Modal.Header>
             <Modal.Body>
                 <Form>
@@ -73,7 +73,7 @@ const ModalEditarDocumento: React.FC<Props> = ({ show, documento, onClose, onGua
                     </Form.Group>
 
                     <Form.Group className="mb-3">
-                        <Form.Label>Descripción</Form.Label>
+                        <Form.Label>Descripcion</Form.Label>
                         <Form.Control
                             as="textarea"
                             rows={3}
@@ -86,10 +86,10 @@ const ModalEditarDocumento: React.FC<Props> = ({ show, documento, onClose, onGua
                 </Form>
             </Modal.Body>
             <Modal.Footer>
-                <Button variant="secondary" onClick={onClose}>
+                <Button variant="outline-secondary" onClick={onClose}>
                     Cancelar
                 </Button>
-                <Button variant="primary" onClick={handleSubmit}>
+                <Button variant="dark" onClick={handleSubmit}>
                     Guardar Cambios
                 </Button>
             </Modal.Footer>

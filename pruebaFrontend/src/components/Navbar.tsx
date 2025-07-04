@@ -2,15 +2,24 @@
 import React, { useState } from 'react';
 import type { DocumentData } from './DocumentForm';
 import DocumentForm from './DocumentForm';
+import ModalTiposDocumento from './ModalTiposDocumento';
+
 
 
 interface Props {
     onNuevoDocumento: (nuevoDoc: DocumentData) => void;
+    tiposDocumento: string[];
+    onActualizarTipos: (nuevosTipos: string[]) => void;
+    onGestionarTipos: () => void;
 }
 
 
-const Navbar: React.FC<Props> = ({ onNuevoDocumento }) => {
+
+const Navbar: React.FC<Props> = ({ onNuevoDocumento, onActualizarTipos, tiposDocumento, onGestionarTipos }) => {
     const [mostrarModal, setMostrarModal] = useState(false);
+    const [mostrarTipos, setMostrarTipos] = useState(false);
+
+
     return (
         <nav className="navbar navbar-expand-lg">
             <div className="container-fluid">
@@ -24,8 +33,14 @@ const Navbar: React.FC<Props> = ({ onNuevoDocumento }) => {
                     mostrarModal={mostrarModal}
                     cerrarModal={() => setMostrarModal(false)}
                     onNuevo={onNuevoDocumento}
+                    tiposDocumento={tiposDocumento} 
                 />
-                <button className="btn btn-outline-dark text-nowrap">Tipos de documento</button>
+                <button
+                    className="btn btn-outline-dark text-nowrap"
+                    onClick={onGestionarTipos} // 
+                >
+                    Tipos de documento
+                </button>
             </div>
         </nav>
     );

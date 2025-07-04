@@ -26,9 +26,10 @@ interface Props {
     mostrarModal: boolean;
     cerrarModal: () => void;
     onNuevo: (doc: DocumentData) => void;
+    tiposDocumento: string[];
 }
 
-const DocumentForm: React.FC<Props> = ({ mostrarModal, cerrarModal, onNuevo }) => {
+const DocumentForm: React.FC<Props> = ({ mostrarModal, cerrarModal, onNuevo, tiposDocumento }) => {
     const [form, setForm] = useState<Omit<DocumentData, "id" | "archivo">>({
         nombre: "",
         tipo: "",
@@ -94,14 +95,19 @@ const DocumentForm: React.FC<Props> = ({ mostrarModal, cerrarModal, onNuevo }) =
                                     <h6>Nombre del Documento</h6>
                                     <input className="form-control mb-2" name="nombre" placeholder="Nombre" onChange={handleChange} required />
                                     <h6>Tipo del documento</h6>
-                                    <select className="form-control mb-2"
+                                    <select
+                                        className="form-control mb-2"
                                         name="tipo"
                                         onChange={handleChange}
-                                        required >
-                                        <option>Factura</option>
-                                        <option>Contrato</option>
-                                        <option>Certificado</option>
-                                    </select> 
+                                        value={form.tipo}
+                                        required
+                                    >
+                                        <option value="">Seleccione..</option>
+                                        {tiposDocumento.map((tipo) => (
+                                            <option key={tipo} value={tipo}>{tipo}</option>
+                                        ))}
+                                    </select>
+
                                     {/*<h6>Fecha</h6>
                                     <input className="form-control mb-2" type="date" name="fechaCreacion" onChange={handleChange} required />{*/ }
                                     <h6>Descripcion</h6>
