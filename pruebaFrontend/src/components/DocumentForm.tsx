@@ -4,10 +4,11 @@ import { v4 as uuidv4 } from "uuid";
 
 // Tipo de documento
 export interface DocumentData {
+
     id: string;
     nombre: string;
-    tipoDocumento: string;
-    fechaCreacion: string;
+    tipo: string;
+    fecha: string;
     descripcion?: string;
     archivo: string;
 
@@ -30,14 +31,18 @@ interface Props {
 const DocumentForm: React.FC<Props> = ({ mostrarModal, cerrarModal, onNuevo }) => {
     const [form, setForm] = useState<Omit<DocumentData, "id" | "archivo">>({
         nombre: "",
-        tipoDocumento: "",
-        fechaCreacion: "",
+        tipo: "",
+        fecha: "",
         descripcion: "",
     });
     const [archivo, setArchivo] = useState<File | null>(null);
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-        setForm({ ...form, [e.target.name]: e.target.value });
+        const { name, value } = e.target;
+        setForm({
+            ...form,
+            [e.target.name]: e.target.value
+        });
     };
 
     const handleFile = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -64,7 +69,7 @@ const DocumentForm: React.FC<Props> = ({ mostrarModal, cerrarModal, onNuevo }) =
             const nuevoDoc: DocumentData = {
                 id: uuidv4(),
                 ...form,
-                fechaCreacion: new Date().toISOString().slice(0, 10),
+                fecha: new Date().toISOString().slice(0, 10),
                 archivo: reader.result as string,
             };
             guardarDocumento(nuevoDoc);
@@ -89,7 +94,14 @@ const DocumentForm: React.FC<Props> = ({ mostrarModal, cerrarModal, onNuevo }) =
                                     <h6>Nombre del Documento</h6>
                                     <input className="form-control mb-2" name="nombre" placeholder="Nombre" onChange={handleChange} required />
                                     <h6>Tipo del documento</h6>
-                                    <input className="form-control mb-2" name="tipoDocumento" placeholder="Tipo Documento" onChange={handleChange} required />
+                                    <select className="form-control mb-2"
+                                        name="tipo"
+                                        onChange={handleChange}
+                                        required >
+                                        <option>Factura</option>
+                                        <option>Contrato</option>
+                                        <option>Certificado</option>
+                                    </select> 
                                     {/*<h6>Fecha</h6>
                                     <input className="form-control mb-2" type="date" name="fechaCreacion" onChange={handleChange} required />{*/ }
                                     <h6>Descripcion</h6>

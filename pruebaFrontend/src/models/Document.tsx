@@ -1,8 +1,8 @@
 export interface DocumentData {
     id: string; // UUID
     nombre: string;
-    tipoDocumento: string;
-    fechaCreacion: string;
+    tipo: string;
+    fecha: string;
     descripcion: string;
     archivo: string; // base64 o URL temporal
 }

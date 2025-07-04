@@ -22,7 +22,7 @@ const DocumentList: React.FC = () => {
             {docs.map(doc => (
                 <div key={doc.id}>
                     <h3>{doc.nombre}</h3>
-                    <p>{doc.tipoDocumento} - {doc.fechaCreacion}</p>
+                    <p>{doc.tipo} - {doc.fecha}</p>
                     <p>{doc.descripcion}</p>
                     <a href={doc.archivo} target="_blank" rel="noopener noreferrer">Ver archivo</a>
                     <button onClick={() => handleEliminar(doc.id)}>Eliminar</button>

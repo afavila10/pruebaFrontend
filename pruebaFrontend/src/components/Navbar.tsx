@@ -1,8 +1,9 @@
 // src/components/Navbar.tsx
 import React, { useState } from 'react';
-import DocumentForm from './DocumentForm';
 import type { DocumentData } from './DocumentForm';
-import type { FC } from 'react';
+import DocumentForm from './DocumentForm';
+
+
 interface Props {
     onNuevoDocumento: (nuevoDoc: DocumentData) => void;
 }

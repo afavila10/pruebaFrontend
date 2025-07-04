@@ -1,6 +1,24 @@
 ﻿import React from 'react';
 
-const FiltroDocumentos: React.FC = () => {
+interface FiltroDocumentosProps {
+    filtros: {
+        texto: string;
+        tipo: string;
+        fecha: string;
+    };
+    onFiltrosChange: (filtros: {
+        texto: string;
+        tipo: string;
+        fecha: string;
+    }) => void;
+}
+
+const FiltroDocumentos: React.FC<FiltroDocumentosProps> = ({ filtros, onFiltrosChange }) => {
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+        const { id, value } = e.target;
+        onFiltrosChange({ ...filtros, [id]: value });
+    };
+
     return (
         <section className="p-4 border rounded bg-white shadow-sm mb-4">
             <h4 className="mb-4">📁 Documentos Cargados</h4>
@@ -8,39 +26,42 @@ const FiltroDocumentos: React.FC = () => {
             <form className="row g-3 align-items-end">
                 {/* Búsqueda por texto */}
                 <div className="col-md-4">
-                    <label htmlFor="busqueda" className="form-label">Buscar por nombre o descripción</label>
+                    <label htmlFor="texto" className="form-label">Buscar por nombre o descripción</label>
                     <input
                         type="text"
                         className="form-control"
-                        id="busqueda"
+                        id="texto"
                         placeholder="Ej: factura, contrato..."
-                        onChange={(e) => console.log("Texto buscado:", e.target.value)}
+                        value={filtros.texto}
+                        onChange={handleChange}
                     />
                 </div>
 
                 {/* Select de tipo de documento */}
                 <div className="col-md-4">
-                    <label htmlFor="tipoDocumento" className="form-label">Tipo de documento</label>
+                    <label htmlFor="tipo" className="form-label">Tipo de documento</label>
                     <select
-                        id="tipoDocumento"
+                        id="tipo"
                         className="form-select"
-                        onChange={(e) => console.log("Tipo seleccionado:", e.target.value)}
+                        value={filtros.tipo}
+                        onChange={handleChange}
                     >
                         <option value="">Todos</option>
-                        <option value="factura">Factura</option>
-                        <option value="contrato">Contrato</option>
-                        <option value="certificado">Certificado</option>
+                        <option value="Factura">Factura</option>
+                        <option value="Contrato">Contrato</option>
+                        <option value="Certificado">Certificado</option>
                     </select>
                 </div>
 
                 {/* Filtro por fecha */}
                 <div className="col-md-4">
-                    <label htmlFor="fechaFiltro" className="form-label">Filtrar por fecha</label>
+                    <label htmlFor="fecha" className="form-label">Filtrar por fecha</label>
                     <input
                         type="date"
                         className="form-control"
-                        id="fechaFiltro"
-                        onChange={(e) => console.log("Fecha seleccionada:", e.target.value)}
+                        id="fecha"
+                        value={filtros.fecha}
+                        onChange={handleChange}
                     />
                 </div>
             </form>

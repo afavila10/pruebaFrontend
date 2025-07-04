@@ -3,17 +3,19 @@ import React from 'react';
 type Documento = {
     id: number;
     nombre: string;
-    tipoDocumento: string;
-    fechaCreacion: string;
+    tipo: string;
+    fecha: string;
     descripcion: string;
 };
 
 type Props = {
     documentos: Documento[];
     onVer?: (id: number) => void;
+    onEditar?: (doc: Documento) => void;
 };
 
-const TablaDocumentos: React.FC<Props> = ({ documentos, onVer }) => {
+const TablaDocumentos: React.FC<Props> = ({ documentos, onVer, onEditar }) => {
+    
     return (
         <div className="table-responsive">
             <table className="table table-bordered table-striped align-middle">
@@ -35,12 +37,17 @@ const TablaDocumentos: React.FC<Props> = ({ documentos, onVer }) => {
                         documentos.map((doc) => (
                             <tr key={doc.id}>
                                 <td>{doc.nombre}</td>
-                                <td>{doc.tipoDocumento}</td>
-                                <td>{doc.fechaCreacion}</td>
+                                <td>{doc.tipo}</td>
+                                <td>{doc.fecha}</td>
                                 <td>{doc.descripcion}</td>
                                 <td className="text-center">
-                                    <button><i className="bi bi-eye-fill text-primary"></i></button>
-                                    <button><i className="bi bi-pencil-square text-warning"></i></button>
+                                    <button onClick={() => onVer && onVer(doc.id)}>
+                                        <i className="bi bi-eye-fill text-primary"></i>
+                                    </button>
+                                    <button onClick={() => onEditar?.(doc)}>
+                                        <i className="bi bi-pencil-square text-warning"></i>
+                                    </button>
+
                                     <button><i className="bi bi-trash-fill text-danger"></i></button>
                                 </td>
                             </tr>
